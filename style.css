@@ -26,9 +26,13 @@ path.domain {
 }
 
 .container-h-100{
-  width: 2160px;
+  width: 2000px;
   height: 90%;
   overflow: hidden;
+}
+
+.flex-container{
+  display: flex;
 }
 
 .box-66{
@@ -45,4 +49,8 @@ path.domain {
   padding: 15px;
   box-shadow: 0px 0px 16px rgba(0,0,0,.1);
   border-radius: 15px;
+}
+
+#goal{
+  width: 200px;
 }
