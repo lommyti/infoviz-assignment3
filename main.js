@@ -1,10 +1,10 @@
 
 // Setup svg using Bostock's margin convention
 
-var margin = {top: 40, right: 100, bottom: 40, left: 50};
+var margin = {top: 40, right: 100, bottom: 50, left: 50};
 
 var width = 2000 - margin.left - margin.right,
-height = 300 - margin.top - margin.bottom;
+height = 400 - margin.top - margin.bottom;
 
 var svg = d3.select(".svg")
 .append("svg")
@@ -124,6 +124,7 @@ function makeViz(dataset) {
   .orient("bottom")
   .tickFormat(d3.time.format("%Y"));
 
+
   svg.append("g")
   .attr("class", "y axis")
   .call(yAxis);
@@ -131,7 +132,13 @@ function makeViz(dataset) {
   svg.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
-  .call(xAxis);
+  .call(xAxis)
+  .selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
+
 
 
   // Create groups for each series, rects for each segment
