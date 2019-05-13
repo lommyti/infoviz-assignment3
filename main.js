@@ -1,12 +1,12 @@
 
 // Setup svg using Bostock's margin convention
 
-var margin = {top: 200, right: 160, bottom: 35, left: 30};
+var margin = {top: 40, right: 160, bottom: 35, left: 50};
 
 var width = 2160 - margin.left - margin.right,
     height = 520 - margin.top - margin.bottom;
 
-var svg = d3.select("body")
+var svg = d3.select(".svg")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)

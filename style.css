@@ -1,0 +1,27 @@
+html, body{
+  height: 100%;
+}
+
+svg {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+}
+
+path.domain {
+  stroke: none;
+}
+
+.y .tick line {
+  stroke: #ddd;
+}
+
+.container-h-100{
+  height: 100%;
+  overflow: hidden;
+}
