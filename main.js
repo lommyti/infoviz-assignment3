@@ -4,7 +4,7 @@
 var margin = {top: 40, right: 100, bottom: 100, left: 50};
 
 var width = 2000 - margin.left - margin.right,
-height = 470 - margin.top - margin.bottom;
+height = 500 - margin.top - margin.bottom;
 
 var svg = d3.select(".svg")
 .append("svg")
@@ -23,7 +23,7 @@ var included_gsm = ["", "Homosexual Characters", "Bisexual Characters"]
 function makeAll() {
   d3.csv("data/marvel-wikia-data.csv", function(data) {
     makeDataset(data);
-    console.log(fulldict);
+    // console.log(fulldict);
     makeViz(dataset);
   });
 }
@@ -53,9 +53,7 @@ function datasetHelper(charData, s) {
       let sex = d.SEX;
       let gsm = d.GSM;
       let num_app = parseInt(d.APPEARANCES);
-      // console.log("gsm: |", gsm, "|");
       if(s === sex && num_app >= min_appearances && included_genders.includes(sex) && (included_gsm.includes(gsm))) {
-        // console.log("gsm: ", gsm)
         if(yr in tempData) {
           tempData[yr] = tempData[yr] + 1;
         }
@@ -115,11 +113,18 @@ function makeViz(dataset) {
 
 
   // Define and draw axes
-  var yAxis = d3.svg.axis()
+  var yAxisLeft = d3.svg.axis()
   .scale(y)
   .orient("left")
   .ticks(4)
-  .tickSize(-width, 0, 0)
+  // .tickSize(-width, 0, 0)
+  .tickFormat( function(d) { return d } );
+
+  var yAxisRight = d3.svg.axis()
+  .scale(y)
+  .orient("right")
+  .ticks(4)
+  // .tickSize(-width, 0, 0)
   .tickFormat( function(d) { return d } );
 
   var xAxis = d3.svg.axis()
@@ -130,13 +135,18 @@ function makeViz(dataset) {
 
   svg.append("g")
   .attr("class", "y axis")
-  .call(yAxis);
+  .call(yAxisLeft);
+
+  svg.append("g")
+  .attr("class", "y axis")
+  .attr("transform", "translate(" + width + " ,0)")
+  .call(yAxisRight);
 
   svg.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
   .call(xAxis)
-  .selectAll("text")
+  .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
@@ -166,11 +176,11 @@ function makeViz(dataset) {
     var xPosition = d3.mouse(this)[0] - 15;
     var yPosition = d3.mouse(this)[1] - 25;
     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    // tooltip.select("text").text("year: " + d.x.getFullYear()
+    // tooltip.select("text").text("year: " + d.x.getFullYear() 
     //   + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
-    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())]
-    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);
-    tooltip.select("text").text(tooltipText(d.x.getFullYear()));
+    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
+    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);  
+    tooltip.select("text").text(tooltipText(d.x.getFullYear()));   
   });
 
   function tooltipText(year) {
@@ -184,7 +194,7 @@ function makeViz(dataset) {
     if(included_genders.includes("Genderfluid Characters")) {
       str += ", # genderfluid: " + fulldict[2][year]
     }
-    return str;
+    return str; 
   }
 
 
@@ -193,7 +203,7 @@ function makeViz(dataset) {
   .data(colors)
   .enter().append("g")
   .attr("class", "legend")
-  .attr("transform", function(d, i) { return "translate(" + (-1815 + i * 200) + ", 410)"; });
+  .attr("transform", function(d, i) { return "translate(" + (-1815 + i * 200) + ", 430)"; });
 
   legend.append("rect")
   .attr("x", width - 18)
@@ -262,7 +272,7 @@ function makeViz(dataset) {
       }
       included_gsm = tempGSM
     });
-    console.log("included_gsm: ", included_gsm)
+    // console.log("included_gsm: ", included_gsm)
   }
 
   document.getElementById("filter_app_button").addEventListener("click", function(){

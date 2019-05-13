@@ -2,7 +2,7 @@ html, body{
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
   background: #f3f3f3;
   font-family: "Chivo", sans-serif;
 }
@@ -28,7 +28,7 @@ path.domain {
 .container-h-100{
   width: 2000px;
   height: 90%;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .flex-container{
