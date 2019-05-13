@@ -13,14 +13,17 @@ var svg = d3.select(".svg")
 .append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var fulldict = []; //dataset in dictionary form, for tooltips
 var dataset;
+
 var min_appearances = 1;
 var included_genders = ["Male Characters", "Female Characters", "Genderfluid Characters"]
 
 function makeAll() {
   d3.csv("data/marvel-wikia-data.csv", function(data) {
-    dataset = makeDataset(data);
-
+    makeDataset(data);
+    console.log(dataset);
+    console.log(fulldict);
     makeViz(dataset);
   });
 }
@@ -32,12 +35,11 @@ var parse = d3.time.format("%Y").parse;
 function makeDataset(charData) {
   // console.log(charData[0]);
 
-  let tempData = d3.layout.stack()(["Male Characters", "Female Characters", "Genderfluid Characters"].map(function(sex) {
-    return datasetHelper(charData, sex);
+  dataset = d3.layout.stack()(["Male Characters", "Female Characters", "Genderfluid Characters"].map(function(sex) {
+    let tempData = datasetHelper(charData, sex);
+    fulldict.push(tempData)
+    return dictToArr(tempData);
   }));
-
-  // console.log(tempData);
-  return tempData;
 }
 
 
@@ -52,7 +54,7 @@ function datasetHelper(charData, s) {
       let num_app = parseInt(d.APPEARANCES);
       // console.log("num_app: ", num_app)
       if(s === sex && num_app >= min_appearances && included_genders.includes(sex)) {
-        console.log("min_app: ", min_appearances, " num_app: ", num_app);
+        // console.log("min_app: ", min_appearances, " num_app: ", num_app);
         if(yr in tempData) {
           tempData[yr] = tempData[yr] + 1;
         }
@@ -68,7 +70,8 @@ function datasetHelper(charData, s) {
       tempData[curYear] = 0;
     }
   }
-  return dictToArr(tempData);
+
+  return tempData;
 
 }
 
@@ -148,13 +151,17 @@ function makeViz(dataset) {
   .attr("y", function(d) { return y(d.y0 + d.y); })
   .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
   .attr("width", x.rangeBand())
+
   .on("mouseover", function() { tooltip.style("display", null); })
   .on("mouseout", function() { tooltip.style("display", "none"); })
   .on("mousemove", function(d) {
     var xPosition = d3.mouse(this)[0] - 15;
     var yPosition = d3.mouse(this)[1] - 25;
     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    tooltip.select("text").text(d.y);
+    tooltip.select("text").text("year: " + d.x.getFullYear() 
+      + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
+      + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
+      + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);     
   });
 
 
@@ -185,16 +192,17 @@ function makeViz(dataset) {
   });
 
 
+
   // Prep the tooltip bits, initial display is hidden
   var tooltip = svg.append("g")
   .attr("class", "tooltip")
   .style("display", "none");
 
-  tooltip.append("rect")
-  .attr("width", 30)
-  .attr("height", 20)
-  .attr("fill", "white")
-  .style("opacity", 0.5);
+  // tooltip.append("rect")
+  // .attr("width", 10)
+  // .attr("height", 20)
+  // .attr("fill", "white")
+  // .style("opacity", 0.5);
 
   tooltip.append("text")
   .attr("x", 15)
@@ -202,6 +210,7 @@ function makeViz(dataset) {
   .style("text-anchor", "middle")
   .attr("font-size", "12px")
   .attr("font-weight", "bold");
+
 
 
 
@@ -223,7 +232,7 @@ function makeViz(dataset) {
   }
 
   document.getElementById("filter_app_button").addEventListener("click", function(){
-    console.log(min_appearances)
+    // console.log(min_appearances)
     svg.selectAll("*").remove();
     updateGenders();
     makeAll();
