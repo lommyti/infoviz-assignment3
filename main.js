@@ -230,7 +230,6 @@ function makeViz(dataset) {
   //slider stuff
   d3.select("#goal").on("input", function() {
     min_appearances = this.value;
-    d3.select('#goal-value').text(min_appearances);
   });
 
   function updateGenders() {
@@ -247,6 +246,7 @@ function makeViz(dataset) {
   document.getElementById("filter_app_button").addEventListener("click", function(){
     // console.log(min_appearances)
     svg.selectAll("*").remove();
+    d3.select('#goal-value').text(min_appearances);
     updateGenders();
     makeAll();
   });
