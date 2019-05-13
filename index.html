@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Diversity in Comics Characters</title>
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Chivo" rel="stylesheet">
 </head>
@@ -15,23 +15,23 @@
       </div>
       <div id="controls" class="box-66">
         <div class="filter-category">
-        Filter by Minimum Number of Appearances: <span id="goal-value">1</span> <br/>
-        <input type="range" min="1" max="4043" id="goal" value="1" step='1'/><br/>
-      </div>
+          Filter by Minimum Number of Appearances: <span id="goal-value">1</span> <br/>
+          <input type="range" min="1" max="4043" id="goal" value="1" step='1'/><br/>
+        </div>
         <div class="flex-container">
-        <div id="gender" class="filter-category">
-          Filter by Gender Identity:<br/>
-          <input type="checkbox" name="gender" value="Male Characters" checked> Male<br>
-          <input type="checkbox" name="gender" value="Female Characters" checked> Female<br>
-          <input type="checkbox" name="gender" value="Genderfluid Characters" checked> Genderfluid
+          <div id="gender" class="filter-category">
+            Filter by Gender Identity:<br/>
+            <input type="checkbox" name="gender" value="Male Characters" checked> Male<br>
+            <input type="checkbox" name="gender" value="Female Characters" checked> Female<br>
+            <input type="checkbox" name="gender" value="Genderfluid Characters" checked> Genderfluid
+          </div>
+          <div id="sexuality" class="filter-category">
+            Filter by Sexuality:<br/>
+            <input type="checkbox" name="sexuality" value="" checked> Heterosexual<br>
+            <input type="checkbox" name="sexuality" value="Homosexual Characters" checked> Homosexual<br>
+            <input type="checkbox" name="sexuality" value="Bisexual Characters" checked> Bisexual
+          </div>
         </div>
-        <div id="sexuality" class="filter-category">
-          Filter by Sexuality:<br/>
-          <input type="checkbox" name="sexuality" value="" checked> Heterosexual<br>
-          <input type="checkbox" name="sexuality" value="Homosexual Characters" checked> Homosexual<br>
-          <input type="checkbox" name="sexuality" value="Bisexual Characters" checked> Bisexual
-        </div>
-      </div>
 
         <button id="filter_app_button">Filter</button>
       </div>
