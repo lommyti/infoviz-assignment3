@@ -54,3 +54,19 @@ path.domain {
 #goal{
   width: 200px;
 }
+
+.filter-category{
+  padding: 15px;
+}
+
+#filter_app_button{
+  border-radius: 10px;
+  padding: 15px;
+  outline: none;
+  border: 3px solid #ccc;
+  background: #eee;
+  box-shadow: none;
+  font-family: "Chivo", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
