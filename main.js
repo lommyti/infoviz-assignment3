@@ -1,10 +1,10 @@
 
 // Setup svg using Bostock's margin convention
 
-var margin = {top: 40, right: 100, bottom: 50, left: 50};
+var margin = {top: 40, right: 100, bottom: 100, left: 50};
 
 var width = 2000 - margin.left - margin.right,
-height = 400 - margin.top - margin.bottom;
+height = 470 - margin.top - margin.bottom;
 
 var svg = d3.select(".svg")
 .append("svg")
@@ -133,7 +133,7 @@ function makeViz(dataset) {
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
   .call(xAxis)
-  .selectAll("text")  
+  .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
@@ -163,11 +163,11 @@ function makeViz(dataset) {
     var xPosition = d3.mouse(this)[0] - 15;
     var yPosition = d3.mouse(this)[1] - 25;
     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    // tooltip.select("text").text("year: " + d.x.getFullYear() 
+    // tooltip.select("text").text("year: " + d.x.getFullYear()
     //   + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
-    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
-    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);  
-    tooltip.select("text").text(tooltipText(d.x.getFullYear()));   
+    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())]
+    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);
+    tooltip.select("text").text(tooltipText(d.x.getFullYear()));
   });
 
   function tooltipText(year) {
@@ -181,8 +181,11 @@ function makeViz(dataset) {
     if(included_genders.includes("Genderfluid Characters")) {
       str += ", # genderfluid: " + fulldict[2][year]
     }
-    return str; 
+    return str;
   }
+
+  var legendGroup = svg.selectAll(".legend").attr("transform", function(d, i) {return "translate(0, 90)";})
+  .append("g");
 
 
   // Draw legend
@@ -190,7 +193,7 @@ function makeViz(dataset) {
   .data(colors)
   .enter().append("g")
   .attr("class", "legend")
-  .attr("transform", function(d, i) { return "translate(-1815," + i * 19 + ")"; });
+  .attr("transform", function(d, i) { return "translate(" + (-1815 + i * 200) + ", 410)"; });
 
   legend.append("rect")
   .attr("x", width - 18)
