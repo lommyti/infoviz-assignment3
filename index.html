@@ -31,10 +31,10 @@
 
 // Setup svg using Bostock's margin convention
 
-var margin = {top: 20, right: 160, bottom: 35, left: 30};
+var margin = {top: 200, right: 160, bottom: 35, left: 30};
 
-var width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var width = 2160 - margin.left - margin.right,
+    height = 750 - margin.top - margin.bottom;
 
 var svg = d3.select("body")
   .append("svg")
@@ -66,37 +66,27 @@ var data = [
 
 
 
-var dataset = {};
+var dataset;
 
 d3.csv("data/marvel-wikia-data.csv", function(data) {
-  makeDataset(data);
+  dataset = makeDataset(data);
   
-  makeViz();
+  makeViz(dataset);
 });
 
 
-
-
-// // Transpose the data into layers
-// var dataset = d3.layout.stack()(["redDelicious", "mcintosh", "oranges", "pears"].map(function(fruit) {
-//   return data.map(function(d) {
-//     return {x: d.year, y: +d[fruit]};
-//   });
-// }));
-
-// console.log(dataset);
-
+var parse = d3.time.format("%Y").parse;
 
 
 function makeDataset(charData) {
-  console.log(charData[0]);
+  // console.log(charData[0]);
 
   let tempData = d3.layout.stack()(["Male Characters", "Female Characters", "Genderfluid Characters"].map(function(sex) {
     return datasetHelper(charData, sex);
   }));
 
-  console.log(tempData);
-
+  // console.log(tempData);
+  return tempData;
 }
 
 
@@ -133,7 +123,7 @@ function dictToArr(dict) {
   //turn it into array
   let finalArr = []
   for (const [key, value] of Object.entries(dict)) {
-    finalArr.push({x: key,y: value});
+    finalArr.push({x: parse(key),y: value});
   }
   return finalArr;
 }
@@ -141,22 +131,35 @@ function dictToArr(dict) {
 
 
 
-function makeViz() {
+
+
+
+
+
+
+
+
+function makeViz(dataset) {
   // Set x, y and colors
   var x = d3.scale.ordinal()
     .domain(dataset[0].map(function(d) { 
-      return d; 
+      return d.x; 
     }))
     .rangeRoundBands([10, width-10], 0.02);
 
+  console.log(dataset);
 
   var y = d3.scale.linear()
-    .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y; });  })])
+    .domain([0, d3.max(dataset, function(d) {  
+      return d3.max(d, function(d) { 
+        return d.y; 
+      });  
+    })])
     .range([height, 0]);
 
   console.log("x: ", x, "y: ", y);
 
-  var colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574"];
+  var colors = ["blue", "red", "yellow"];
 
 
   // Define and draw axes
@@ -218,7 +221,7 @@ function makeViz() {
     .attr("x", width - 18)
     .attr("width", 18)
     .attr("height", 18)
-    .style("fill", function(d, i) {return colors.slice().reverse()[i];});
+    .style("fill", function(d, i) {return colors.slice()[i];});
    
   legend.append("text")
     .attr("x", width + 5)
@@ -227,10 +230,9 @@ function makeViz() {
     .style("text-anchor", "start")
     .text(function(d, i) { 
       switch (i) {
-        case 0: return "Anjou pears";
-        case 1: return "Naval oranges";
-        case 2: return "McIntosh apples";
-        case 3: return "Red Delicious apples";
+        case 0: return "Male Characters";
+        case 1: return "Female Characters";
+        case 2: return "Genderfluid Characters";
       }
     });
 
