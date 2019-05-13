@@ -184,9 +184,6 @@ function makeViz(dataset) {
     return str;
   }
 
-  var legendGroup = svg.selectAll(".legend").attr("transform", function(d, i) {return "translate(0, 90)";})
-  .append("g");
-
 
   // Draw legend
   var legend = svg.selectAll(".legend")
