@@ -4,10 +4,10 @@ html, body{
   padding: 0;
   overflow-y: hidden;
   background: #f3f3f3;
+  font-family: "Chivo", sans-serif;
 }
 
 svg {
-  font: 10px sans-serif;
   shape-rendering: crispEdges;
 }
 

@@ -4,7 +4,7 @@
 var margin = {top: 40, right: 100, bottom: 40, left: 50};
 
 var width = 2000 - margin.left - margin.right,
-height = 340 - margin.top - margin.bottom;
+height = 300 - margin.top - margin.bottom;
 
 var svg = d3.select(".svg")
 .append("svg")
@@ -213,9 +213,9 @@ function makeViz(dataset) {
 
   function updateGenders() {
     let tempGenders = []
-    d3.selectAll("input[name='gender']").each(function(d){
+    d3.selectAll("input[name='gender']").each(function(d) {
       cb = d3.select(this);
-      if(cb.property("checked")){
+      if(cb.property("checked")) {
         tempGenders.push(cb.property("value"));
       }
       included_genders = tempGenders
