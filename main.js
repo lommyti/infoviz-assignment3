@@ -22,7 +22,6 @@ var included_genders = ["Male Characters", "Female Characters", "Genderfluid Cha
 function makeAll() {
   d3.csv("data/marvel-wikia-data.csv", function(data) {
     makeDataset(data);
-    console.log(dataset);
     console.log(fulldict);
     makeViz(dataset);
   });
@@ -34,7 +33,7 @@ var parse = d3.time.format("%Y").parse;
 
 function makeDataset(charData) {
   // console.log(charData[0]);
-
+  fulldict = [];
   dataset = d3.layout.stack()(["Male Characters", "Female Characters", "Genderfluid Characters"].map(function(sex) {
     let tempData = datasetHelper(charData, sex);
     fulldict.push(tempData)
@@ -52,7 +51,6 @@ function datasetHelper(charData, s) {
       let yr = parseInt(d.Year);
       let sex = d.SEX;
       let num_app = parseInt(d.APPEARANCES);
-      // console.log("num_app: ", num_app)
       if(s === sex && num_app >= min_appearances && included_genders.includes(sex)) {
         // console.log("min_app: ", min_appearances, " num_app: ", num_app);
         if(yr in tempData) {
@@ -158,11 +156,26 @@ function makeViz(dataset) {
     var xPosition = d3.mouse(this)[0] - 15;
     var yPosition = d3.mouse(this)[1] - 25;
     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    tooltip.select("text").text("year: " + d.x.getFullYear() 
-      + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
-      + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
-      + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);     
+    // tooltip.select("text").text("year: " + d.x.getFullYear() 
+    //   + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
+    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
+    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);  
+    tooltip.select("text").text(tooltipText(d.x.getFullYear()));   
   });
+
+  function tooltipText(year) {
+    let str = "year: " + year;
+    if(included_genders.includes("Male Characters")) {
+      str += ", # male: " + fulldict[0][year];
+    }
+    if(included_genders.includes("Female Characters")) {
+      str += ", # female: " + fulldict[1][year];
+    }
+    if(included_genders.includes("Genderfluid Characters")) {
+      str += ", # genderfluid: " + fulldict[2][year]
+    }
+    return str; 
+  }
 
 
   // Draw legend
