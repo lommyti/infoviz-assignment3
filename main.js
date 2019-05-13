@@ -109,7 +109,7 @@ function makeViz(dataset) {
 
   // console.log("x: ", x, "y: ", y);
 
-  var colors = ["blue", "red", "yellow"];
+  var colors = ["#84b3ff", "#ffc4dd", "#c3ffba"];
 
 
   // Define and draw axes
