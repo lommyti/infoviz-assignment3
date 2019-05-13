@@ -18,6 +18,7 @@ var dataset;
 
 var min_appearances = 1;
 var included_genders = ["Male Characters", "Female Characters", "Genderfluid Characters"]
+var included_gsm = ["", "Homosexual Characters", "Bisexual Characters"]
 
 function makeAll() {
   d3.csv("data/marvel-wikia-data.csv", function(data) {
@@ -50,9 +51,11 @@ function datasetHelper(charData, s) {
     if(typeof d.Year !== 'undefined' && d.Year.length === 4) {
       let yr = parseInt(d.Year);
       let sex = d.SEX;
+      let gsm = d.GSM;
       let num_app = parseInt(d.APPEARANCES);
-      if(s === sex && num_app >= min_appearances && included_genders.includes(sex)) {
-        // console.log("min_app: ", min_appearances, " num_app: ", num_app);
+      // console.log("gsm: |", gsm, "|");
+      if(s === sex && num_app >= min_appearances && included_genders.includes(sex) && (included_gsm.includes(gsm))) {
+        // console.log("gsm: ", gsm)
         if(yr in tempData) {
           tempData[yr] = tempData[yr] + 1;
         }
@@ -250,11 +253,24 @@ function makeViz(dataset) {
     });
   }
 
+  function updateGSM() {
+    let tempGSM = []
+    d3.selectAll("input[name='sexuality']").each(function(d) {
+      cb = d3.select(this);
+      if(cb.property("checked")) {
+        tempGSM.push(cb.property("value"));
+      }
+      included_gsm = tempGSM
+    });
+    console.log("included_gsm: ", included_gsm)
+  }
+
   document.getElementById("filter_app_button").addEventListener("click", function(){
     // console.log(min_appearances)
     svg.selectAll("*").remove();
     d3.select('#goal-value').text(min_appearances);
     updateGenders();
+    updateGSM();
     makeAll();
   });
 
