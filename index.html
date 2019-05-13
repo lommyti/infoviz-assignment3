@@ -18,10 +18,19 @@
         Filter by Minimum Number of Appearances: <span id="goal-value">1</span> <br/>
         <input type="range" min="1" max="4043" id="goal" value="1" step='1'/><br/>
 
-        Filter by Gender Identity:<br/>
-        <input type="checkbox" name="gender" value="Male Characters" checked> Male<br>
-        <input type="checkbox" name="gender" value="Female Characters" checked> Female<br>
-        <input type="checkbox" name="gender" value="Genderfluid Characters" checked> Genderfluid
+        <div id="gender">
+          Filter by Gender Identity:<br/>
+          <input type="checkbox" name="gender" value="Male Characters" checked> Male<br>
+          <input type="checkbox" name="gender" value="Female Characters" checked> Female<br>
+          <input type="checkbox" name="gender" value="Genderfluid Characters" checked> Genderfluid
+        </div>
+        <br/><br/>
+        <div id="sexuality">
+          Filter by Sexuality:<br/>
+          <input type="checkbox" name="sexuality" value="" checked> Heterosexual<br>
+          <input type="checkbox" name="sexuality" value="Homosexual Characters" checked> Homosexual<br>
+          <input type="checkbox" name="sexuality" value="Bisexual Characters" checked> Bisexual
+        </div>
 
 
         <button id="filter_app_button">Filter</button>
