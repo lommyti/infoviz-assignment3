@@ -106,6 +106,8 @@ function dictToArr(dict) {
 
 
 
+
+
 function makeViz(dataset) {
   // Set x, y and colors
   var x = d3.scale.ordinal()
@@ -117,7 +119,7 @@ function makeViz(dataset) {
   console.log(dataset);
 
   var y = d3.scale.linear()
-    .domain([0, d3.max(dataset, function(d) {
+    .domain([0, d3.sum(dataset, function(d) {
       return d3.max(d, function(d) {
         return d.y;
       });
@@ -133,7 +135,7 @@ function makeViz(dataset) {
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .ticks(5)
+    .ticks(4)
     .tickSize(-width, 0, 0)
     .tickFormat( function(d) { return d } );
 
