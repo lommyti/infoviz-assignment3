@@ -17,13 +17,16 @@ var svg = d3.select("body")
 /* Data in strings like it would be if imported from a csv */
 
 var dataset;
+var min_appearances = 1;
 
-d3.csv("data/marvel-wikia-data.csv", function(data) {
-  dataset = makeDataset(data);
+function makeAll() {
+  d3.csv("data/marvel-wikia-data.csv", function(data) {
+    dataset = makeDataset(data);
 
-  makeViz(dataset);
-});
-
+    makeViz(dataset);
+  });
+}
+makeAll()
 
 var parse = d3.time.format("%Y").parse;
 
@@ -47,9 +50,11 @@ function datasetHelper(charData, s) {
   charData.map(function(d) {
     if(typeof d.Year !== 'undefined' && d.Year.length === 4) {
     let yr = parseInt(d.Year);
-
     let sex = d.SEX;
-      if(s === sex) {
+    let num_app = parseInt(d.APPEARANCES);
+    // console.log("num_app: ", num_app)
+      if(s === sex && num_app >= min_appearances) {
+        console.log("min_app: ", min_appearances, " num_app: ", num_app);
         if(yr in tempData) {
           tempData[yr] = tempData[yr] + 1;
         }
@@ -84,10 +89,6 @@ function dictToArr(dict) {
 
 
 
-
-
-
-
 function makeViz(dataset) {
   // Set x, y and colors
   var x = d3.scale.ordinal()
@@ -96,7 +97,7 @@ function makeViz(dataset) {
     }))
     .rangeRoundBands([10, width-10], 0.02);
 
-  console.log(dataset);
+  // console.log(dataset);
 
   var y = d3.scale.linear()
     .domain([0, d3.sum(dataset, function(d) {
@@ -106,7 +107,7 @@ function makeViz(dataset) {
     })])
     .range([height, 0]);
 
-  console.log("x: ", x, "y: ", y);
+  // console.log("x: ", x, "y: ", y);
 
   var colors = ["blue", "red", "yellow"];
 
@@ -203,4 +204,26 @@ function makeViz(dataset) {
     .style("text-anchor", "middle")
     .attr("font-size", "12px")
     .attr("font-weight", "bold");
-  }
+
+
+
+  //slider stuff
+  d3.select("#goal").on("input", function() {
+    min_appearances = this.value;
+    d3.select('#goal-value').text(min_appearances);
+  });
+
+  document.getElementById("filter_app_button").addEventListener("click", function(){
+    console.log(min_appearances)
+    svg.selectAll("*").remove();
+    makeAll();
+  });
+
+
+}
+
+
+
+
+
+
