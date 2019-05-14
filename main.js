@@ -124,7 +124,7 @@ function makeViz(dataset) {
   .scale(y)
   .orient("right")
   .ticks(4)
-  // .tickSize(-width, 0, 0)
+  .tickSize(-width, 0, 0)
   .tickFormat( function(d) { return d } );
 
   var xAxis = d3.svg.axis()
@@ -146,7 +146,7 @@ function makeViz(dataset) {
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
   .call(xAxis)
-  .selectAll("text")  
+  .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
@@ -176,11 +176,11 @@ function makeViz(dataset) {
     var xPosition = d3.mouse(this)[0] - 15;
     var yPosition = d3.mouse(this)[1] - 25;
     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    // tooltip.select("text").text("year: " + d.x.getFullYear() 
+    // tooltip.select("text").text("year: " + d.x.getFullYear()
     //   + "\n# male: " + fulldict[0][parseInt(d.x.getFullYear())]
-    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())] 
-    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);  
-    tooltip.select("text").text(tooltipText(d.x.getFullYear()));   
+    //   + "\n# female: " + fulldict[1][parseInt(d.x.getFullYear())]
+    //   + "\n# genderfluid: " + fulldict[2][parseInt(d.x.getFullYear())]);
+    tooltip.select("text").text(tooltipText(d.x.getFullYear()));
   });
 
   function tooltipText(year) {
@@ -194,7 +194,7 @@ function makeViz(dataset) {
     if(included_genders.includes("Genderfluid Characters")) {
       str += ", # genderfluid: " + fulldict[2][year]
     }
-    return str; 
+    return str;
   }
 
 
@@ -246,11 +246,12 @@ function makeViz(dataset) {
 
 
 
-
+function updateSlider() {
   //slider stuff
-  d3.select("#goal").on("input", function() {
+  d3.selectAll("#goal").each(function() {
     min_appearances = this.value;
   });
+}
 
   function updateGenders() {
     let tempGenders = []
@@ -275,14 +276,22 @@ function makeViz(dataset) {
     // console.log("included_gsm: ", included_gsm)
   }
 
-  document.getElementById("filter_app_button").addEventListener("click", function(){
-    // console.log(min_appearances)
+  // document.getElementById("filter_app_button").addEventListener("click", function(){
+    // svg.selectAll("*").remove();
+    // d3.select('#goal-value').text(min_appearances);
+    // updateSlider();
+    // updateGenders();
+    // updateGSM();
+    // makeAll();
+  // });
+
+d3.select("#filter_app_button").on("click", function() {
     svg.selectAll("*").remove();
     d3.select('#goal-value').text(min_appearances);
+    updateSlider();
     updateGenders();
     updateGSM();
     makeAll();
-  });
-
+});
 
 }
