@@ -2,37 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Diversity in Comics Characters</title>
+  <title>Diversity in Marvel Characters</title>
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Chivo" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Arimo:400,700|Assistant:300,400,600" rel="stylesheet">
 </head>
 <body>
   <div class="container-h-100">
     <div class="flex-container">
-      <div id="intro" class="box-66">
-        <h1>Diversity in Comics Characters</h1>
+      <div id="intro" class="box-66 box-title">
+        <h1>Representation in Marvel Characters</h1>
+        <p>Historical perceptions of comics often go hand in hand with the stereotype of the white, heterosexual
+          American male. Does this hold true when we look at not only who reads comics, but who's in them?</p>
       </div>
       <div id="controls" class="box-66">
         <div class="filter-category">
-          Filter by Minimum Number of Appearances: <span id="goal-value">1</span> <br/>
+          <h2>Minimum Number of Appearances: <span id="goal-value">1</span></h2> <br/>
           <input type="range" min="1" max="4043" id="goal" value="1" step='1'/><br/>
         </div>
         <div class="flex-container">
           <div id="gender" class="filter-category">
-            Filter by Gender Identity:<br/>
+            <h2>Gender Identity</h2>
             <input type="checkbox" name="gender" value="Male Characters" checked> Male<br>
             <input type="checkbox" name="gender" value="Female Characters" checked> Female<br>
             <input type="checkbox" name="gender" value="Genderfluid Characters" checked> Genderfluid
           </div>
           <div id="sexuality" class="filter-category">
-            Filter by Sexuality:<br/>
+            <h2>Sexuality</h2>
             <input type="checkbox" name="sexuality" value="" checked> Heterosexual<br>
             <input type="checkbox" name="sexuality" value="Homosexual Characters" checked> Homosexual<br>
             <input type="checkbox" name="sexuality" value="Bisexual Characters" checked> Bisexual
           </div>
         </div>
-
         <button id="filter_app_button">Filter</button>
       </div>
     </div>
