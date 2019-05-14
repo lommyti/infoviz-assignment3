@@ -109,7 +109,7 @@ function makeViz(dataset) {
 
   // console.log("x: ", x, "y: ", y);
 
-  var colors = ["#84b3ff", "#ffc4dd", "#c3ffba"];
+  var colors = ["#84b3ff", "#ffc4dd", "#37CCB2"];
 
 
   // Define and draw axes
@@ -287,8 +287,8 @@ function updateSlider() {
 
 d3.select("#filter_app_button").on("click", function() {
     svg.selectAll("*").remove();
-    d3.select('#goal-value').text(min_appearances);
     updateSlider();
+    d3.select('#goal-value').text(min_appearances);
     updateGenders();
     updateGSM();
     makeAll();
